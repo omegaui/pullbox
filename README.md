@@ -1,5 +1,5 @@
 # pullbox
 
-A quick download manager.
+A swiss link manager.
 
 
