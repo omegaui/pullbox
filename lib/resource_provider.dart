@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
 
-appIcon(size) => NetworkImage('https://img.icons8.com/external-wanicon-lineal-color-wanicon/$size/000000/external-download-user-interface-wanicon-lineal-color-wanicon.png');
+const appIcon128 =  AssetImage('assets/icons8-pull-icon-128.png');
+const githubIcon =  AssetImage('assets/icons8-github.png');
 

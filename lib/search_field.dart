@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pullbox/app_data_manager.dart';
+
+final TextEditingController searchFieldController = TextEditingController();
 
 class SearchField extends StatefulWidget {
   const SearchField({Key? key}) : super(key: key);
@@ -46,25 +49,34 @@ class _SearchFieldState extends State<SearchField> {
                       focussed = value;
                     });
                   },
-                  child: TextField(
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                  child: KeyboardListener(
+                    focusNode: FocusNode(
+                      onKey: (e, _) {
+                        search(searchFieldController.text);
+                        return KeyEventResult.ignored;
+                      }
                     ),
-                    cursorColor: Colors.white,
-                    decoration: InputDecoration(
-                      hintText: "Search Links",
-                      hintStyle: TextStyle(
-                        color: Colors.grey.shade400,
+                    child: TextField(
+                      controller: searchFieldController,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
-                      border: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent)),
-                      enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent)),
-                      focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent)),
+                      cursorColor: Colors.white,
+                      decoration: InputDecoration(
+                        hintText: "Search Links (name or url)",
+                        hintStyle: TextStyle(
+                          color: Colors.grey.shade400,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        border: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.transparent)),
+                        enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.transparent)),
+                        focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.transparent)),
+                      ),
                     ),
                   ),
                 ),

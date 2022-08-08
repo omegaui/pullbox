@@ -3,6 +3,9 @@ import 'package:pullbox/add_link_box.dart';
 import 'package:pullbox/app_data_manager.dart';
 import 'package:pullbox/main_panel.dart';
 import 'package:pullbox/resource_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+final GlobalKey<MainPanelState> mainPanelKey = GlobalKey();
 
 void main() {
   runApp(const App());
@@ -14,6 +17,7 @@ class App extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: "PullBox",
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: const ContentPane(),
@@ -67,13 +71,40 @@ class _ContentPaneState extends State<ContentPane> {
             color: Colors.grey.shade800.withOpacity(0.2),
             child: Stack(
               children: [
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade900.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: IconButton(
+                          tooltip: "View project on GitHub",
+                          onPressed: () async {
+                            dynamic url = Uri.parse('https://github.com/omegaui/pullbox');
+                            if(await canLaunchUrl(url)){
+                              await launchUrl(url);
+                            }
+                          },
+                          icon: const Image(image: githubIcon),
+                          iconSize: 48,
+                          splashRadius: 40,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const SizedBox(height: 30),
-                      Image(
-                        image: appIcon(128),
+                      const Image(
+                        image: appIcon128,
                       ),
                       const SizedBox(height: 15),
                       const Text(
@@ -97,7 +128,7 @@ class _ContentPaneState extends State<ContentPane> {
               ],
             ),
           ),
-          const Expanded(child: MainPanel()),
+          Expanded(child: MainPanel(key: mainPanelKey)),
         ],
       ),
     );

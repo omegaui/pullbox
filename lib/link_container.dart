@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:pullbox/app_data_manager.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'link_data.dart';
 
@@ -51,10 +54,31 @@ class LinkContainer extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Tooltip(
+                    message: "Open in browser",
+                    child: TextButton(
+                      style: TextButton.styleFrom(primary: Colors.cyanAccent),
+                      onPressed: () async {
+                        dynamic url = Uri.parse(linkData.url);
+                        if(await canLaunchUrl(url)){
+                          await launchUrl(url);
+                        }
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.open_in_browser,
+                          color: Colors.cyan,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Tooltip(
                     message: "Copy Download link",
                     child: TextButton(
                       style: TextButton.styleFrom(primary: Colors.deepOrange),
-                      onPressed: () {},
+                      onPressed: () {
+                        Clipboard.setData(ClipboardData(text: linkData.url));
+                      },
                       child: const Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Icon(
@@ -68,7 +92,9 @@ class LinkContainer extends StatelessWidget {
                     message: "Delete this link",
                     child: TextButton(
                       style: TextButton.styleFrom(primary: Colors.red),
-                      onPressed: () {},
+                      onPressed: () {
+                        removeLink(linkData);
+                      },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Icon(

@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:pullbox/link_container.dart';
-import 'package:pullbox/link_data.dart';
 import 'package:pullbox/search_field.dart';
 
-List<LinkData> links = [
-  LinkData('app', 'url', 'IntelliJ version 2023'),
-  LinkData('package', 'url', 'gnome-system-monitor'),
-  LinkData('archive', 'url', 'android-x86_64-rom'),
-  LinkData('image', 'url', 'omegaide light mode'),
-  LinkData('text-file', 'url', 'windows activation cheat code'),
-];
+import 'app_data_manager.dart';
 
-class MainPanel extends StatelessWidget {
+class MainPanel extends StatefulWidget {
   const MainPanel({Key? key}) : super(key: key);
 
+  @override
+  State<MainPanel> createState() => MainPanelState();
+}
+
+class MainPanelState extends State<MainPanel> {
+  
+  void rebuild(){
+    setState(() {
+      // rebuilding widget ...
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Column(
